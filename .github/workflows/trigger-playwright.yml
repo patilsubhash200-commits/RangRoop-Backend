@@ -1,0 +1,19 @@
+name: Trigger API Automation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Playwright Repo
+        run: |
+          curl -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.AUTOMATION_TOKEN }}" \
+          https://api.github.com/repos/subhash-cmyk/subhash-cmyk/api-automation/dispatches \
+          -d '{"event_type":"backend-update"}'
